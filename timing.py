@@ -27,6 +27,16 @@ class server():
             if tag[i] != self.h[i]:
                 return False
         return True
+    
+    def secure_verify(self,tag):
+        tmph = self.h
+        if len(self.h) != len(tag):
+            tag = tag.zfill(64)
+            tmph = tmph.zfill(64)
+        result = 0
+        for x, y in zip(tmph, tag):
+            result |= ord(x) ^ ord(y)
+        return result == 0
 
 class user():
     def __init__(self, key = 'zhujd'):
